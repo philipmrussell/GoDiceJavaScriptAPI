@@ -23,12 +23,15 @@ class GoDice {
 	
 	static diceTypes = {
 		D6: 0,
-		D20: 1,
-		D10: 2,
-		D10X: 3,
-		D4: 4,
-		D8: 5,
-		D12: 6,
+		D6a: 1,
+		D6b: 2,
+		D20: 3,
+		D10: 4,
+		D10X: 5,
+		D4: 6,
+		D8: 7,
+		D12: 8,
+
 	}
 	
 	// The vectors for each die and shell type, used to check which side is facing up
@@ -221,6 +224,25 @@ class GoDice {
 		24: 12,
 	}
 	
+	// D6 Transforms
+	static d6aTransform = {
+		1: 1,
+		2: 3,
+		3: 4,
+		4: 5,
+		5: 6,
+		6: 8,
+	}
+	
+	static d6bTransform = {
+		1: 1,
+		2: 2,
+		3: 2,
+		4: 3,
+		5: 3,
+		6: 4,
+	}
+	
 	bluetoothDevice;
 	GoDiceService;
 	CubeCharacteristics;
@@ -406,8 +428,18 @@ class GoDice {
 		var value = 0;
 		
 		// Calculating closest vector according to current die type
-		if (this.dieType == GoDice.diceTypes.D6){
+		if (this.dieType >= GoDice.diceTypes.D6 && this.dieType <= GoDice.diceTypes.D6b){
+			// D6 shell type
 			value = this.getClosestVector(GoDice.d6Vectors, xyzArray)
+			
+			switch (this.dieType) {
+				case (GoDice.diceTypes.D6a):
+					value = GoDice.d6aTransform[value]
+					break
+				case (GoDice.diceTypes.D6b):
+					value = GoDice.d6bTransform[value]
+					break
+			}
 		}
 		else if (this.dieType >= GoDice.diceTypes.D20 && this.dieType <= GoDice.diceTypes.D10X) {
 			// D20 shell type

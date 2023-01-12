@@ -131,6 +131,19 @@ GoDice.prototype.onDiceConnected = (diceId, diceInstance) => {
 	d12Button.textContent = 'D12';
 	diceHtmlEl.append(d12Button)
 	
+	// D6 Alternative
+	const d6aButton = document.createElement('button');
+	d6aButton.className = 'diebtn btn-outline-primary';
+	d6aButton.onclick = diceInstance.setDieType.bind(diceInstance, GoDice.diceTypes.D6a)
+	d6aButton.textContent = 'D6a';
+	diceHtmlEl.append(d6aButton)
+	
+	const d6bButton = document.createElement('button');
+	d6bButton.className = 'diebtn btn-outline-primary';
+	d6bButton.onclick = diceInstance.setDieType.bind(diceInstance, GoDice.diceTypes.D6b)
+	d6bButton.textContent = 'D6b';
+	diceHtmlEl.append(d6bButton)
+	
 
 	// add battery level indicator
 	const colorIndicator = document.createElement('div');
@@ -154,7 +167,7 @@ GoDice.prototype.onRollStart = (diceId) => {
 	const diceIndicatorEl = document.getElementById(diceId + "-die-status");
 
 	// show rolling 
-	diceIndicatorEl.textContent = "Rollling....";
+	diceIndicatorEl.textContent = "Rolling....";
 };
 
 GoDice.prototype.onStable = (diceId, value, xyzArray) => {
